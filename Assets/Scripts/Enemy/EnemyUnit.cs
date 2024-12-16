@@ -78,6 +78,7 @@ public class EnemyUnit : MonoBehaviour, IHittable
 
     public void DropCoin()
     {
+        
         if (coinPrefab == null) return;
         float dropAmount = Random.Range(1, 5);
         for (int i = 0; i < dropAmount; i++)
@@ -87,7 +88,16 @@ public class EnemyUnit : MonoBehaviour, IHittable
                 Random.Range(-0.5f, 0.5f),
                 0);
 
-            Instantiate(coinPrefab, spawnPosition, Quaternion.identity);
+            GameObject coinObject = Instantiate(coinPrefab, spawnPosition, Quaternion.identity);
+            Animator animator = coinObject.GetComponentInChildren<Animator>();
+            if (animator != null)
+            {
+                animator.SetTrigger("Drop");
+            }
+            else
+            {
+                Debug.Log("no animator");
+            }
         }
     }
 
@@ -102,7 +112,16 @@ public class EnemyUnit : MonoBehaviour, IHittable
                 Random.Range(-0.5f, 0.5f),
                 0);
 
-            Instantiate(bluePrintShardPrefab, spawnPosition, Quaternion.identity);
+            GameObject coinObject = Instantiate(bluePrintShardPrefab, spawnPosition, Quaternion.identity);
+            Animator animator = coinObject.GetComponentInChildren<Animator>();
+            if (animator != null)
+            {
+                animator.SetTrigger("Drop");
+            }
+            else
+            {
+                Debug.Log("no animator");
+            }
         }
     }
 

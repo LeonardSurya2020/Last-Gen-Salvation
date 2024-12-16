@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinPrefab: {fileID: 8399875857207000226, guid: 5f7a9564333985c4b83ae65f1bb9ba60, type: 3}
-  bluePrintShardPrefab: {fileID: 0}
+  bluePrintShardPrefab: {fileID: 1343368603658541239, guid: 392751b382a497e459ad2af7fcf5c201, type: 3}
   healthBarBG: {fileID: 4339139393594844357}
   healthBarImageFill: {fileID: 7401059890317080477}
   playerMov: {fileID: 0}
@@ -272,6 +272,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   target: {fileID: 0}
   enemyUnit: {fileID: 2543572580581926553}
+  healthFillBar: {fileID: 7401059890317080477}
 --- !u!58 &696505740683133948
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -6,4 +6,5 @@ public class currencyUnit : MonoBehaviour
 {
     public float amount;
     public float blueprintShard;
+    public Animator animator;
 }

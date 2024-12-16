@@ -276,6 +276,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blueShardAmount: {fileID: 3975337932918721612}
   greenShardAmount: {fileID: 3583602719369715452}
+  blueShardUI: {fileID: 1826109997289850774}
+  greenShardUI: {fileID: 3203731622557657770}
 --- !u!1 &1799783646289692304
 GameObject:
   m_ObjectHideFlags: 0
@@ -1004,7 +1006,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 120.1, y: -13.2}
+  m_AnchoredPosition: {x: 120.1, y: -13.200012}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5001158681926008399
@@ -1172,7 +1174,7 @@ MonoBehaviour:
   - {x: -0.10045099, y: -0.18754995, z: -0.000000007450581}
   m_ShapePathHash: 1724820389
   m_Mesh: {fileID: 0}
-  m_InstanceId: 43110
+  m_InstanceId: 38982
   m_LocalBounds:
     m_Center: {x: 0.020219445, y: 0.04568842, z: 0}
     m_Extent: {x: 0.18760884, y: 0.25254634, z: 0}

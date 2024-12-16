@@ -122,7 +122,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!43 &103081469
+--- !u!43 &307636765
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -451,10 +451,10 @@ PrefabInstance:
     - target: {fileID: 1809493951454228998, guid: ae795ba1db2f5f741ada8f98232dd2ea, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 103081469}
+      objectReference: {fileID: 307636765}
     - target: {fileID: 1809493951454228998, guid: ae795ba1db2f5f741ada8f98232dd2ea, type: 3}
       propertyPath: m_InstanceId
-      value: -1464
+      value: -1436
       objectReference: {fileID: 0}
     - target: {fileID: 2044173579310712747, guid: ae795ba1db2f5f741ada8f98232dd2ea, type: 3}
       propertyPath: fillSpeed
@@ -580,6 +580,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashMaterial: {fileID: 2100000, guid: ff6469cb03972bd43958b933e4970d38, type: 2}
   duration: 0.1
+--- !u!1001 &1433981308
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 999204967388512594, guid: 7254be1afc274704a98801963a7b7c6d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.4722
+      objectReference: {fileID: 0}
+    - target: {fileID: 999204967388512594, guid: 7254be1afc274704a98801963a7b7c6d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.0119786
+      objectReference: {fileID: 0}
+    - target: {fileID: 999204967388512594, guid: 7254be1afc274704a98801963a7b7c6d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.07828494
+      objectReference: {fileID: 0}
+    - target: {fileID: 999204967388512594, guid: 7254be1afc274704a98801963a7b7c6d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 999204967388512594, guid: 7254be1afc274704a98801963a7b7c6d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 999204967388512594, guid: 7254be1afc274704a98801963a7b7c6d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 999204967388512594, guid: 7254be1afc274704a98801963a7b7c6d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 999204967388512594, guid: 7254be1afc274704a98801963a7b7c6d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 999204967388512594, guid: 7254be1afc274704a98801963a7b7c6d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 999204967388512594, guid: 7254be1afc274704a98801963a7b7c6d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2135128866108374061, guid: 7254be1afc274704a98801963a7b7c6d, type: 3}
+      propertyPath: m_Name
+      value: DyingSouls (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7254be1afc274704a98801963a7b7c6d, type: 3}
 --- !u!114 &1439705088 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7401059890317080477, guid: 7254be1afc274704a98801963a7b7c6d, type: 3}
@@ -757,13 +814,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4510979166375276418, guid: 5f7a9564333985c4b83ae65f1bb9ba60, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a695060cb50845b41b0c6f09114c891e, type: 2}
     - target: {fileID: 8399875857207000226, guid: 5f7a9564333985c4b83ae65f1bb9ba60, type: 3}
       propertyPath: m_Name
       value: BlueDataShard
       objectReference: {fileID: 0}
     - target: {fileID: 8399875857207000226, guid: 5f7a9564333985c4b83ae65f1bb9ba60, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9100210799865354851, guid: 5f7a9564333985c4b83ae65f1bb9ba60, type: 3}
       propertyPath: m_LocalPosition.x
@@ -771,7 +832,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9100210799865354851, guid: 5f7a9564333985c4b83ae65f1bb9ba60, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.6108558
+      value: -0.656
       objectReference: {fileID: 0}
     - target: {fileID: 9100210799865354851, guid: 5f7a9564333985c4b83ae65f1bb9ba60, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1037,3 +1098,4 @@ SceneRoots:
   - {fileID: 4745745102992424584}
   - {fileID: 2559713730653710053}
   - {fileID: 1603872411814619377}
+  - {fileID: 1433981308}

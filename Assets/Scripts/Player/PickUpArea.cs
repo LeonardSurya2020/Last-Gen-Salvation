@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PickUpArea : MonoBehaviour
 {
     private PlayerUnit playerunit;
     [SerializeField] private TextMeshProUGUI blueShardAmount;
     [SerializeField] private TextMeshProUGUI greenShardAmount;
+    [SerializeField] private Image blueShardUI;
+    [SerializeField] private Image greenShardUI;
 
     private void Start()
     {
@@ -44,7 +47,9 @@ public class PickUpArea : MonoBehaviour
     private void AddFund(float Amount)
     {
         if(playerunit == null) return;
+        Animator animator = blueShardUI.GetComponent<Animator>();
         playerunit.currencyAmount += Amount;
+        animator.SetTrigger("Get");
         blueShardAmount.text = playerunit.currencyAmount.ToString();
     }
 
@@ -52,7 +57,9 @@ public class PickUpArea : MonoBehaviour
     private void AddBluePrintFund(float Amount)
     {
         if (playerunit == null) return;
+        Animator animator = greenShardUI.GetComponent <Animator>();
         playerunit.bluePrintCurrencyAmount += Amount;
+        animator.SetTrigger("Get");
         greenShardAmount.text = playerunit.bluePrintCurrencyAmount.ToString();
     }
 }

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe4b16ceab638c34ea923f3c9b2b8d6a, type: 3}
   m_Name: DyingSoulData
   m_EditorClassIdentifier: 
-  <maxHealth>k__BackingField: 2
+  <maxHealth>k__BackingField: 1
   <damage>k__BackingField: 2
-  <speed>k__BackingField: 0
+  <speed>k__BackingField: 2
