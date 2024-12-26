@@ -6,7 +6,7 @@ public class SoulChaseState : IEnemySoulState
 {
     public void EnterState(SoulsEnemyMovement enemy)
     {
-        Debug.Log("Soul entering Idle State");
+        Debug.Log("Soul entering Chase State");
     }
 
     public void UpdateState(SoulsEnemyMovement enemy)
@@ -29,6 +29,6 @@ public class SoulChaseState : IEnemySoulState
 
     public void ExitState(SoulsEnemyMovement enemy)
     {
-        Debug.Log("Soul exiting Idle State");
+        Debug.Log("Soul exiting Chase State");
     }
 }

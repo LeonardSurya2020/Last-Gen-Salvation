@@ -6,6 +6,7 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private GameObject player;
 
     private void Awake()
     {
@@ -16,7 +17,7 @@ public class CameraFollow : MonoBehaviour
     public void setCamera()
     {
         // Cari Player di scene setelah scene diload
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
             virtualCamera.Follow = player.transform;

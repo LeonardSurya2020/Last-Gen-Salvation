@@ -49,7 +49,6 @@ public class SoulsEnemyMovement : MonoBehaviour
         //enemyUnit = GetComponentInParent<EnemyUnit>();
         if (enemyUnit != null)
         {
-            Debug.Log("base speed soul = " + enemyUnit.baseSpeed);
             speed = enemyUnit.baseSpeed;
         }
         rb = GetComponent<Rigidbody2D>();
@@ -97,8 +96,6 @@ public class SoulsEnemyMovement : MonoBehaviour
             TransitionToState(idleState); // Pindah ke idle state
             return;
         }
-
-        speed = enemyUnit.baseSpeed;
         Vector2 direction = (target.transform.position - transform.position);
         // Bulatkan nilai X dan Y ke -1, 0, atau 1
         float roundedX = Mathf.Round(direction.x);
@@ -145,6 +142,7 @@ public class SoulsEnemyMovement : MonoBehaviour
 
     public void StopChasing()
     {
+        Debug.Log("stop chasing dipanggil");
         animator.SetBool("IsRunning", false);
         rb.velocity = Vector2.zero;
     }

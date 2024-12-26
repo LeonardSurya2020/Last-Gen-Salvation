@@ -187,7 +187,7 @@ Transform:
   m_GameObject: {fileID: 2135128866108374061}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.76, y: 1.0500321, z: -0.07828494}
+  m_LocalPosition: {x: -0.76, y: 1.0500321, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -211,6 +211,7 @@ MonoBehaviour:
   bluePrintShardPrefab: {fileID: 1343368603658541239, guid: 392751b382a497e459ad2af7fcf5c201, type: 3}
   healthBarBG: {fileID: 4339139393594844357}
   healthBarImageFill: {fileID: 7401059890317080477}
+  isDyingSouls: 1
   playerMov: {fileID: 0}
   <EnemyData>k__BackingField: {fileID: 11400000, guid: 3635ea9dfac168c47b7cd34dbcf26b7e, type: 2}
   <currentHealth>k__BackingField: 0
@@ -458,7 +459,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: -3747738226332225400, guid: 49b8056e3b1b208468042b60ec9dcbd1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

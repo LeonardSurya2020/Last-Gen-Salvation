@@ -9,11 +9,14 @@ public class BuildingSpriteSorting : MonoBehaviour
     public GameObject positionObject;
     public GameObject playerObject;
 
-    void Start()
-    {
-        playerObject = GameObject.FindGameObjectWithTag("Player");
-    }
 
+    private void Update()
+    {
+        if (playerObject == null)
+        {
+            playerObject = GameObject.FindGameObjectWithTag("Player");
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("Player"))

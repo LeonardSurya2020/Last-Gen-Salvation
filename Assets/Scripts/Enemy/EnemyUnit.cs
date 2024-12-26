@@ -13,6 +13,7 @@ public class EnemyUnit : MonoBehaviour, IHittable
     [SerializeField] private Image healthBarBG;
     [SerializeField] private Image healthBarImageFill;
 
+    public bool isDyingSouls;
 
     [SerializeField]
     private PlayerMovement playerMov;
@@ -130,7 +131,57 @@ public class EnemyUnit : MonoBehaviour, IHittable
     {
         playerMov = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         playerMov.isKnocked = false;
+        healthBarImageFill.gameObject.SetActive(false);
+        healthBarBG.gameObject.SetActive(false);
 
+        if (isDyingSouls == true)
+        {
+            Collider2D[] bodyCollider;
+            bodyCollider = this.gameObject.GetComponentsInChildren<Collider2D>();
+            foreach (Collider2D collider in bodyCollider)
+            {
+                collider.enabled = false;
+            }
+            
+            SoulsEnemyMovement soulMov = this.gameObject.GetComponent<SoulsEnemyMovement>();
+            soulMov.isknocked = false;
+            soulMov.speed = 0;
+            soulMov.StopChasing();
+            
+        }
+        else
+        {
+            Collider2D[] bodyCollider;
+            bodyCollider = this.gameObject.GetComponentsInChildren<Collider2D>();
+            foreach (Collider2D collider in bodyCollider)
+            {
+                collider.enabled = false;
+            }
+
+            EnemyMovement enemymov = this.gameObject.GetComponent<EnemyMovement>();
+            enemymov.isknocked = false;
+            enemymov.speed = 0;
+            Rigidbody2D rb = this.gameObject.GetComponent<Rigidbody2D>();
+            rb.velocity = Vector2.zero;
+            enemymov.StopChasing();
+            
+        }
+
+        StartCoroutine(DeathAnimation());
+
+       
+        
+    }
+
+    private IEnumerator DeathAnimation()
+    {
+        Animator animator = GetComponentInChildren<Animator>();
+        animator.SetBool("IsDead", true);
+
+
+
+
+        yield return new WaitForSeconds(0.45f);
         DropCoin();
         DropBluePrintShard();
         Destroy(gameObject);

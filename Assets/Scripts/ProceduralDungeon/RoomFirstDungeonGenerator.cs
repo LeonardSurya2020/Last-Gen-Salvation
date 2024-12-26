@@ -22,7 +22,29 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     [SerializeField]
     private GameObject player; // Referensi ke player
 
+    [SerializeField]
+    private EnemyVisualizer enemyVisualizer; // Tambahkan visualizer musuh
+
+    [SerializeField]
+    private int maxEnemiesPerRoom = 5; // Maksimum jumlah musuh per ruangan
+    [SerializeField]
+    [Range(0f, 1f)]
+    private float enemySpawnProbability = 0.8f; // Peluang spawn musuh di setiap posisi
+    [SerializeField]
+    private int spawnMargin = 1; // Margin dari tepi ruangan untuk area spawn
+
+    [SerializeField]
+    private GameObject teleporterPrefab; // Prefab untuk teleporter
+
+    [SerializeField]
+    private GameObject startTeleporterPrefab; // Prefab untuk teleporter
+
     public float totalRoom;
+
+    private void Start()
+    {
+        GenerateDungeon();
+    }
 
     protected override void RunProceduralGeneration()
     {
@@ -31,7 +53,10 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
 
     private void CreateRooms()
     {
-        var roomsList = ProceduralGenerationAlgorithms.BinarySpacePartitioning(new BoundsInt((Vector3Int) startPosition, new Vector3Int(dungeonWidht, dungeonHeight, 0)), minRoomWidth, minRoomHeight);
+        var roomsList = ProceduralGenerationAlgorithms.BinarySpacePartitioning(
+            new BoundsInt((Vector3Int)startPosition, new Vector3Int(dungeonWidht, dungeonHeight, 0)),
+            minRoomWidth, minRoomHeight);
+
         while (roomsList.Count < totalRoom || roomsList.Count > totalRoom)
         {
             CreateRooms();
@@ -43,7 +68,10 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
 
         var firstRoom = roomsList[0];
         Vector2Int firstRoomCenter = (Vector2Int)Vector3Int.RoundToInt(firstRoom.center);
+
+        // Tempatkan teleporter di posisi awal pemain
         PlacePlayer(firstRoomCenter);
+        PlaceTeleporterAtPlayerStart(firstRoomCenter); // Tambahkan ini
 
         List<Vector2Int> roomCenter = new List<Vector2Int>();
         foreach (var room in roomsList)
@@ -57,10 +85,72 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
         tilemapVisualizer.PaintFloorTiles(floor);
         WallGenerator.CreateWalls(floor, tilemapVisualizer);
         DecorationGenerator.CreateDecorations(floor, tilemapVisualizer, decorationProbability);
+
+        // Spawn musuh di setiap ruangan
+        EnemySpawner.SpawnEnemies(roomsList, enemyVisualizer, maxEnemiesPerRoom, enemySpawnProbability, spawnMargin);
+
+        // Letakkan teleporter di ruangan terakhir
+        PlaceTeleporter(roomsList);
     }
 
     private void PlacePlayer(Vector2Int spawnPosition)
     {
+        // Cek apakah player sudah diinstansiasi di scene
+        GameObject[] existingPlayers = GameObject.FindGameObjectsWithTag("Player"); // Pastikan player diberi tag "Player"
+        GameObject existingPlayerSpawner = GameObject.FindGameObjectWithTag("PlayerSpawn"); // Pastikan player diberi tag "Player"
+        //Jika ada, hancurkan player lama
+        //if (existingPlayer != null)
+        //{
+        //    Debug.Log("Hancurkan player");
+        //    DestroyImmediate(existingPlayer.transform.parent.gameObject);
+        //}
+
+        // Jika ada, hancurkan player lama
+        foreach (GameObject existingPlayer in existingPlayers)
+        {
+            if (existingPlayer != null)
+            {
+                // Jika ada parent, hancurkan parent
+                if (existingPlayer.transform.parent != null)
+                {
+                    Debug.Log("Hancurkan player dengan parent");
+                    DestroyImmediate(existingPlayer.transform.parent.gameObject);
+                }
+                else
+                {
+                    // Jika tidak ada parent, hancurkan langsung existingPlayer
+                    Debug.Log("Hancurkan player langsung");
+                    DestroyImmediate(existingPlayer);
+                }
+            }
+        }
+
+        if (existingPlayerSpawner != null)
+        {
+            // Jika ada parent, hancurkan parent
+            if (existingPlayerSpawner.transform.parent != null)
+            {
+                Debug.Log("Hancurkan player dengan parent");
+                DestroyImmediate(existingPlayerSpawner.transform.parent.gameObject);
+            }
+            else
+            {
+                // Jika tidak ada parent, hancurkan langsung existingPlayer
+                Debug.Log("Hancurkan player langsung");
+                DestroyImmediate(existingPlayerSpawner);
+            }
+        }
+
+        //if (existingPlayer.transform.parent != null)
+        //{
+        //    DestroyImmediate(existingPlayer.transform.parent.gameObject);
+        //}
+        //else
+        //{
+        //    // Jika tidak ada parent, hancurkan langsung existingPlayer
+        //    DestroyImmediate(existingPlayer);
+        //}
+
         // Ubah posisi spawn dari koordinat grid ke posisi dunia
         Vector3 worldPosition = tilemapVisualizer.floorTilemap.CellToWorld((Vector3Int)spawnPosition);
 
@@ -72,19 +162,50 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
         }
 
         // Pastikan objek player ada di scene (instantiate jika belum ada)
-        if (player.transform.parent == null)
-        {
-            GameObject playerInstance = Instantiate(player, worldPosition, Quaternion.identity);
-            playerInstance.transform.position = new Vector3(worldPosition.x, worldPosition.y, 0); // Pastikan Z = 0 untuk 2D
-            Debug.Log("Player instantiated at: " + playerInstance.transform.position);
-        }
-        else
-        {
-            // Jika player sudah ada di scene, cukup pindahkan posisinya
-            player.transform.position = new Vector3(worldPosition.x, worldPosition.y, player.transform.position.z);
-            Debug.Log("Player already in scene at: " + player.transform.position);
-        }
+        GameObject playerInstance = Instantiate(player, worldPosition, Quaternion.identity);
+        playerInstance.transform.position = new Vector3(worldPosition.x, worldPosition.y, 0); // Pastikan Z = 0 untuk 2D
+        //playerInstance.tag = "Player";  // Beri tag pada objek player yang baru diinstansiasi
+        Debug.Log("Player instantiated at: " + playerInstance.transform.position);
     }
+
+    // Menambahkan teleporter di posisi awal pemain
+    private void PlaceTeleporterAtPlayerStart(Vector2Int playerStartPosition)
+    {
+        if (startTeleporterPrefab == null)
+        {
+            Debug.LogWarning("Teleporter prefab belum diatur!");
+            return;
+        }
+
+        // Konversi posisi ke world position (dengan offset)
+        Vector3 worldPosition = new Vector3(playerStartPosition.x, playerStartPosition.y + 0.2f, 0);
+        Debug.Log("posisi = " + worldPosition);
+
+        // Instansiasi teleporter
+        Instantiate(startTeleporterPrefab, worldPosition, Quaternion.identity);
+    }
+
+    private void PlaceTeleporter(List<BoundsInt> roomsList)
+    {
+        if (teleporterPrefab == null)
+        {
+            Debug.LogWarning("Teleporter prefab belum diatur!");
+            return;
+        }
+
+        // Tentukan ruangan terakhir (akhir dari daftar ruangan)
+        var lastRoom = roomsList[roomsList.Count - 1];
+
+        // Ambil posisi tengah ruangan terakhir
+        Vector2Int lastRoomCenter = (Vector2Int)Vector3Int.RoundToInt(lastRoom.center);
+
+        // Konversi ke world position (dengan offset)
+        Vector3 worldPosition = new Vector3(lastRoomCenter.x + 0.5f, lastRoomCenter.y + 0.5f, 0);
+
+        // Instansiasi teleporter
+        Instantiate(teleporterPrefab, worldPosition, Quaternion.identity);
+    }
+
 
     private HashSet<Vector2Int> ConnectRooms(List<Vector2Int> roomCenters)
     {

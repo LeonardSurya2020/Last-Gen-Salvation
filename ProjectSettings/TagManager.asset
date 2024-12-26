@@ -9,6 +9,8 @@ TagManager:
   - PickUpArea
   - BluePrintCurrency
   - AttackArea
+  - VirtualCamera
+  - PlayerSpawn
   layers:
   - Default
   - TransparentFX

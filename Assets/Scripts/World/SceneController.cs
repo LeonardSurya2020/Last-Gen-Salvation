@@ -15,6 +15,7 @@ public class SceneController : MonoBehaviour
         if(collision.gameObject.CompareTag("Player"))
         {
             enterAllowed = true;
+            EnterScene();
         }
     }
 
@@ -34,9 +35,14 @@ public class SceneController : MonoBehaviour
             return;
         }
 
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            SceneManager.LoadScene(sceneToLoad);
-        }
+        //if(Input.GetKeyDown(KeyCode.E))
+        //{
+        //    SceneManager.LoadScene(sceneToLoad);
+        //}
+    }
+
+    public void EnterScene()
+    {
+        SceneManager.LoadScene(sceneToLoad);
     }
 }

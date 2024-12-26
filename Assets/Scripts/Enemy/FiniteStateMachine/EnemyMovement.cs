@@ -55,7 +55,6 @@ public class EnemyMovement : MonoBehaviour
         enemyUnit = GetComponentInParent<EnemyUnit>();
         if (enemyUnit != null)
         {
-            Debug.Log("base speed demon = " + enemyUnit.baseSpeed);
             speed = enemyUnit.baseSpeed;
         }
         rb = GetComponent<Rigidbody2D>();

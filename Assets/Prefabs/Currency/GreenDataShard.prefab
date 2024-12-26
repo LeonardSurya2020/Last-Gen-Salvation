@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 1613779256587614453, guid: 340d7e0227a515c4c8cf83fc82665f24, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -199,3 +199,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amount: 0
   blueprintShard: 1
+  animator: {fileID: 0}

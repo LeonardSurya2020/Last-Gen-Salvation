@@ -9,9 +9,13 @@ public abstract class AbstractDungeonGenerator : MonoBehaviour
     [SerializeField]
     protected Vector2Int startPosition = Vector2Int.zero;
 
+    [SerializeField]
+    protected PrefabVisualizer prefabVisualizer = null;
+
     public void GenerateDungeon()
     {
         tilemapVisualizer.Clear();
+        prefabVisualizer.ClearDecorations();
         RunProceduralGeneration();
     }
 

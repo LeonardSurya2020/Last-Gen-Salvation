@@ -35,7 +35,10 @@ public class AttackAreaAction : MonoBehaviour
         {
             enemyRB.velocity = Vector2.zero;
             Vector2 thrownDirec = Vector2.zero;
-            EnemyMovement enemyMov = collision.gameObject.GetComponent<EnemyMovement>();
+            EnemyUnit enemyUnit = collision.gameObject.GetComponent<EnemyUnit>();
+
+           
+
             enemyRB.simulated = true;
             if (collision.gameObject.transform.position.x < this.gameObject.transform.position.x)
             {
@@ -49,8 +52,19 @@ public class AttackAreaAction : MonoBehaviour
             {
                 thrownDirec = new Vector2(1, 1);
             }
-            EnemyHit();
-            StartCoroutine(ApplyKnockBack(enemyRB, thrownDirec, enemyMov));
+            if (enemyUnit.isDyingSouls == true)
+            {
+                SoulsEnemyMovement soulMov = collision.gameObject.GetComponent<SoulsEnemyMovement>();
+                EnemyHit();
+                StartCoroutine(ApplyKnockBack(enemyRB, thrownDirec, null, soulMov, enemyUnit.isDyingSouls));
+            }
+            else
+            {
+                EnemyMovement enemyMov = collision.gameObject.GetComponent<EnemyMovement>();
+                EnemyHit();
+                StartCoroutine(ApplyKnockBack(enemyRB, thrownDirec, enemyMov, null, enemyUnit.isDyingSouls));
+            }
+
             
         }
     }
@@ -61,13 +75,16 @@ public class AttackAreaAction : MonoBehaviour
         Debug.Log("Hitting Enemy");
     }
 
-    public IEnumerator ApplyKnockBack(Rigidbody2D rb, Vector2 direction, EnemyMovement enemyMov)
+    public IEnumerator ApplyKnockBack(Rigidbody2D rb, Vector2 direction, EnemyMovement enemyMov, SoulsEnemyMovement soulMov, bool isDyingSouls)
     {
-        enemyMov.isknocked = true;
+        if(isDyingSouls == true) soulMov.isknocked = true;
+        else enemyMov.isknocked = true;
+
         rb.velocity = Vector2.zero; // Atur kecepatan ke nol
       //rb.AddForce(direction * throwForce, ForceMode2D.Impulse);
         rb.velocity = direction * throwForce;
         yield return new WaitForSeconds(0.1f);
-        enemyMov.isknocked = false;
+        if (isDyingSouls == true) soulMov.isknocked = false;
+        else enemyMov.isknocked = false;
     }
 }
