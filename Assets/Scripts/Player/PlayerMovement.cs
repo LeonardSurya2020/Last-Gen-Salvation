@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement Instance;
 
+    [SerializeField]private Camera mainCamera;
     [Header("Movement Control")]
     public float speed;
     public Rigidbody2D rb;
@@ -14,12 +17,15 @@ public class PlayerMovement : MonoBehaviour
     public float horiz;
     public float vert;
     public bool isKnocked;
+    public Transform dropPoint;
 
 
     [Header("Attack Control")]
     public bool isAttacking;
     public bool canRecieveInput;
     public bool inputRecieved = true;
+    public bool isRangeWeapon = false;
+    public bool rangeFireButtonDown = false;
 
     [Header("Animatior Control")]
     public Animator animator;
@@ -32,8 +38,21 @@ public class PlayerMovement : MonoBehaviour
     private IPlayerState currentState;
     public PlayerUnit playerUnit;
 
+    [SerializeField] private SpriteRenderer weaponSpriteRenderer;
+    [SerializeField] private GameObject rangeWeaponSprite;
+
+    [field: SerializeField]
+    public UnityEvent <Vector2> OnPointerPositionChange { get; set; }
+
+    [field: SerializeField]
+    public UnityEvent OnFireButtonPressed { get; set; }
+
+    [field: SerializeField]
+    public UnityEvent OnFireButtonReleased { get; set; }
+
     private void Awake()
     {
+        mainCamera = Camera.main;
         Instance = this;
     }
     // Start is called before the first frame update
@@ -53,17 +72,69 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //GetPointerInput();
         currentState.UpdateState(this);
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (isRangeWeapon)
         {
-            Attack();
-            animator.SetFloat("ScaleX", scaleX);
-            animator.SetFloat("ScaleY", scaleY);
-            TransitionToState(attackState);
-            
+            GetRangeFireInput();
+            GetPointerInput();
+            if(Input.GetKeyDown(KeyCode.F))
+            {
+                if (playerUnit != null && playerUnit.weaponObject != null)
+                {
+                    Debug.Log("jatoh");
+                    Instantiate(playerUnit.weaponObject, dropPoint.transform.position, Quaternion.identity);
+                    playerUnit.RemoveRangeWeapon();
+                    isRangeWeapon = false;
+                }
+            }
+
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                Attack();
+                animator.SetFloat("ScaleX", scaleX);
+                animator.SetFloat("ScaleY", scaleY);
+                TransitionToState(attackState);
+
+            }
         }
 
 
+    }
+
+    private void GetRangeFireInput()
+    {
+        if (Input.GetAxisRaw("Fire1") > 0)
+        {
+            if (!rangeFireButtonDown)
+            {
+                rangeFireButtonDown = true;
+                OnFireButtonPressed?.Invoke();
+            }
+
+        }
+        else
+        {
+            if(rangeFireButtonDown)
+            {
+                rangeFireButtonDown = false;
+                OnFireButtonReleased?.Invoke();
+            }
+            
+        }
+    }
+
+    // Mengambil Input Vector dari posisi mouse
+    private void GetPointerInput()
+    {
+        Vector3 mousPos = Input.mousePosition;
+        mousPos.z = mainCamera.nearClipPlane;
+        var mouseInWorldSpace = mainCamera.ScreenToWorldPoint(mousPos);
+        Debug.Log("mousepos = " +  mouseInWorldSpace); 
+        OnPointerPositionChange?.Invoke(mouseInWorldSpace);
     }
 
     private void FixedUpdate()
@@ -93,6 +164,15 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("MovementX", movX);
             animator.SetFloat("MovementY", movY);
 
+            if(movY > 0)
+            {
+                weaponSpriteRenderer.sortingOrder = 12;
+            }
+            else
+            {
+                weaponSpriteRenderer.sortingOrder = 10;
+            }
+
             if (Mathf.Abs(horizontalInput) > 0 || Mathf.Abs(verticalInput) > 0)
             {
 
@@ -113,18 +193,31 @@ public class PlayerMovement : MonoBehaviour
 
     public void Flip(float horizontalInput, float verticalInput)
     {
+        
+
         if (horizontalInput > 0)
         {
             Vector3 localscale = transform.localScale;
             localscale.x = 1f;
             transform.localScale = localscale;
 
+            Vector3 rangeWeaponScale = rangeWeaponSprite.transform.localScale;
+            rangeWeaponScale.x = 1f;
+            rangeWeaponSprite.transform.localScale = rangeWeaponScale;
+
+
         }
         else if (horizontalInput < 0)
         {
             Vector3 localscale = transform.localScale;
+
             localscale.x = -1f;
             transform.localScale = localscale;
+
+            Vector3 rangeWeaponScale = rangeWeaponSprite.transform.localScale;
+            rangeWeaponScale.x = -1f;
+            rangeWeaponSprite.transform.localScale = rangeWeaponScale;
+
         }
 
     }
@@ -167,4 +260,5 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         isAttacking = false;
     }
+
 }

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf822374a679f064ba485574d999fb1d, type: 3}
+  m_Name: OldGunWeaponData
+  m_EditorClassIdentifier: 
+  <BulletData>k__BackingField: {fileID: 11400000, guid: ec0801963766f3e48b44bd8f9a8974e3, type: 2}
+  <PickUpWeapon>k__BackingField: {fileID: 4731891328740883665, guid: b71cf2c0c3bb8c940b8eaa4daba3cbbe, type: 3}
+  <AmmoCapacity>k__BackingField: 5
+  <AutomaticFire>k__BackingField: 0
+  <WeaponDelay>k__BackingField: 0.5
+  <ReloadDelay>k__BackingField: 1
+  <SpreadAngle>k__BackingField: 5
+  multiBulletShoot: 0
+  bulletCount: 3

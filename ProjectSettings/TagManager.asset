@@ -11,6 +11,9 @@ TagManager:
   - AttackArea
   - VirtualCamera
   - PlayerSpawn
+  - WeaponPickUp
+  - WeaponParent
+  - RangeWeapon
   layers:
   - Default
   - TransparentFX
@@ -21,8 +24,8 @@ TagManager:
   - Player
   - Enemy
   - AttackArea
-  - 
-  - 
+  - Bullet
+  - CameraBound
   - 
   - 
   - 

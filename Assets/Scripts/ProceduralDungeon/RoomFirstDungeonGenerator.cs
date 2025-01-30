@@ -85,6 +85,7 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
         tilemapVisualizer.PaintFloorTiles(floor);
         WallGenerator.CreateWalls(floor, tilemapVisualizer);
         DecorationGenerator.CreateDecorations(floor, tilemapVisualizer, decorationProbability);
+        DecorationPrefabGenerator.CreatePrefabDecorations(floor, prefabVisualizer, decorationProbability);
 
         // Spawn musuh di setiap ruangan
         EnemySpawner.SpawnEnemies(roomsList, enemyVisualizer, maxEnemiesPerRoom, enemySpawnProbability, spawnMargin);
